@@ -13,16 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springApps.GreetingApp.dto.Greeting;
 import com.springApps.GreetingApp.dto.User;
+import com.springApps.GreetingApp.services.GreetingService;
 
 @RestController
 @RequestMapping("/greet")
-public class GreetingController {
+public class GreetingController extends GreetingService {
 
 	private AtomicLong id = new AtomicLong();
 	private String message = " How are you doing %s %s?";
+
 	@GetMapping(value = { "", "/", "home" })
 	public Greeting hello() {
-		return new Greeting(id.incrementAndGet(), " How you doin' ?");
+		return message();
 	}
 
 	@GetMapping("/query")
