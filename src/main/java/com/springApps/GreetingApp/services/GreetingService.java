@@ -1,5 +1,7 @@
 package com.springApps.GreetingApp.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +44,19 @@ public class GreetingService implements IGreetingService {
 
 		return greetingRepo.save( new Greeting(String.format(message, firstName, lastName)) );
 	}
+
+	@Override
+	public Greeting findGreeting(String id) {
+		// TODO Auto-generated method stub
+		
+		Optional<Greeting> greeting = greetingRepo.findById(Long.parseLong(id));
+		
+		if (greeting.isPresent() )
+			return greeting.get();
+		else
+			return (new Greeting(-1, " Greeting not found!"));
+	}
+	
+	
 
 }

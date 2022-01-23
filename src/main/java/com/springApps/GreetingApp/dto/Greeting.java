@@ -12,6 +12,10 @@ public class Greeting {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String message;
+	
+	public Greeting() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getMessage() {
 		return message;
@@ -25,5 +29,13 @@ public class Greeting {
 		super();
 		this.message = message;
 	}
+
+	public Greeting(long id, String message) {
+		super();
+		this.id = id;
+		this.message = message;
+	}
+	
+	
 
 }

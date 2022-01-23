@@ -9,5 +9,7 @@ public interface IGreetingService {
 	public Greeting message(String name);
 
 	public Greeting message(String firstName, String lastName);
+	
+	public Greeting findGreeting(String id);
 
 }

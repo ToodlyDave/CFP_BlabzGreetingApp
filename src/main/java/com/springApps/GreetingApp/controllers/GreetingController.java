@@ -64,5 +64,10 @@ public class GreetingController {
 		
 		return greetingService.message(fName, lastName);
 	}
+	
+	@GetMapping("/find/{id}")
+	public Greeting findGreeting(@PathVariable String id) {
+		return greetingService.findGreeting(id);
+	}
 
 }
