@@ -72,6 +72,17 @@ public class GreetingService implements IGreetingService {
 		else
 			return new Greeting(-1, " Greeting not found!");
 	}
+
+	@Override
+	public Greeting deleteGreeting(String id) {
+		// TODO Auto-generated method stub
+		if (greetingRepo.findById(Long.parseLong(id)).isPresent()) {
+			greetingRepo.deleteById(Long.parseLong(id));
+			return new Greeting(-1, " Greeting deleted!");
+		}
+		else
+			return new Greeting(-1, " No such greeting!");
+	}
 	
 	
 

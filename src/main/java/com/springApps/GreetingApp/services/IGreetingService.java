@@ -17,5 +17,7 @@ public interface IGreetingService {
 	public List<Greeting> showAllGreetings();
 	
 	public Greeting updateGreeting(Greeting greeting);
+	
+	public Greeting deleteGreeting(String id);
 
 }
