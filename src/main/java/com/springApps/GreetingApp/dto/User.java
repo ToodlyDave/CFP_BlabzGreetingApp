@@ -12,11 +12,11 @@ public class User {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return firstName == null ? "" : firstName;
 	}
 
 	public String getLastName() {
-		return lastName;
+		return lastName == null ? "" : lastName;
 	}
 
 }

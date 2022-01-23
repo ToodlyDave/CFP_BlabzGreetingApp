@@ -1,6 +1,6 @@
 package com.springApps.GreetingApp.controllers;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,32 +19,46 @@ import com.springApps.GreetingApp.services.GreetingService;
 @RequestMapping("/greet")
 public class GreetingController extends GreetingService {
 
-	private AtomicLong id = new AtomicLong();
-	private String message = " How are you doing %s %s?";
-
 	@GetMapping(value = { "", "/", "home" })
 	public Greeting hello() {
 		return message();
 	}
 
 	@GetMapping("/query")
-	public Greeting hello(@RequestParam(value = "name") String name) {
-		return new Greeting(id.incrementAndGet(), " How are you doing " + name + "?");
+	public Greeting helloQuery(@RequestParam(value = "fName", defaultValue = "") String firstName,
+			@RequestParam(value = "lName", defaultValue = "") String lastName) {
+		return message(firstName, lastName);
 	}
 
-	@GetMapping("/path/{name}")
-	public Greeting helloPath(@PathVariable String name) {
-		return new Greeting(id.incrementAndGet(), " How are you doing " + name + "?");
+	@GetMapping(value = { "/path/{fName}/{lName}", "/path/{fName}", "/path"})
+	public Greeting helloPath(@PathVariable Optional<String> fName, @PathVariable Optional<String> lName) {
+		String firstName = "";
+		String lastName = "";
+
+		if (fName.isPresent())
+			firstName = fName.get();
+
+		if (lName.isPresent())
+			lastName = lName.get();
+
+		return message(firstName, lastName);
+
 	}
 
 	@PostMapping("/post")
 	public Greeting helloPost(@RequestBody User user) {
-		return new Greeting(id.incrementAndGet(), String.format(message, user.getFirstName(), user.getLastName()));
+		return message(user.getFirstName(), user.getLastName());
 	}
 
-	@PutMapping("/put/{fName}")
-	public Greeting hello(@PathVariable String fName, @RequestParam(value = "lName") String lName) {
-		return new Greeting(id.incrementAndGet(), String.format(message, fName, lName));
+	@PutMapping(value = {"/put/{firstName}", "/put"})
+	public Greeting hello(@PathVariable Optional<String> firstName, @RequestParam(value = "lName", defaultValue = "") String lastName) {
+		String fName = "";
+		
+		if(firstName.isPresent()) {
+			fName = firstName.get();
+		}
+		
+		return message(fName, lastName);
 	}
 
 }
