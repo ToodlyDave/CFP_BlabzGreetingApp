@@ -63,6 +63,15 @@ public class GreetingService implements IGreetingService {
 		// TODO Auto-generated method stub
 		return (List<Greeting>) greetingRepo.findAll();
 	}
+
+	@Override
+	public Greeting updateGreeting(Greeting greeting) {
+		// TODO Auto-generated method stub
+		if (greetingRepo.findById(greeting.getId()).isPresent())
+			return greetingRepo.save(greeting);
+		else
+			return new Greeting(-1, " Greeting not found!");
+	}
 	
 	
 

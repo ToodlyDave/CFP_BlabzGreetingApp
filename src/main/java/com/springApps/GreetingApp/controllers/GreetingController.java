@@ -75,5 +75,10 @@ public class GreetingController {
 	public List<Greeting> showGreetings() {
 		return greetingService.showAllGreetings();
 	}
+	
+	@PutMapping("/update")
+	public Greeting updateGreeting(@RequestBody Greeting greeting) {
+		return greetingService.updateGreeting(greeting);
+	}
 
 }
