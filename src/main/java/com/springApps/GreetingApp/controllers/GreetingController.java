@@ -2,6 +2,7 @@ package com.springApps.GreetingApp.controllers;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,21 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springApps.GreetingApp.dto.Greeting;
 import com.springApps.GreetingApp.dto.User;
-import com.springApps.GreetingApp.services.GreetingService;
+import com.springApps.GreetingApp.services.IGreetingService;
 
 @RestController
 @RequestMapping("/greet")
-public class GreetingController extends GreetingService {
+public class GreetingController {
+	
+	@Autowired
+	private IGreetingService greetingService;
 
 	@GetMapping(value = { "", "/", "home" })
 	public Greeting hello() {
-		return message();
+		return greetingService.message();
 	}
 
 	@GetMapping("/query")
 	public Greeting helloQuery(@RequestParam(value = "fName", defaultValue = "") String firstName,
 			@RequestParam(value = "lName", defaultValue = "") String lastName) {
-		return message(firstName, lastName);
+		return greetingService.message(firstName, lastName);
 	}
 
 	@GetMapping(value = { "/path/{fName}/{lName}", "/path/{fName}", "/path"})
@@ -41,13 +45,13 @@ public class GreetingController extends GreetingService {
 		if (lName.isPresent())
 			lastName = lName.get();
 
-		return message(firstName, lastName);
+		return greetingService.message(firstName, lastName);
 
 	}
 
 	@PostMapping("/post")
 	public Greeting helloPost(@RequestBody User user) {
-		return message(user.getFirstName(), user.getLastName());
+		return greetingService.message(user.getFirstName(), user.getLastName());
 	}
 
 	@PutMapping(value = {"/put/{firstName}", "/put"})
@@ -58,7 +62,7 @@ public class GreetingController extends GreetingService {
 			fName = firstName.get();
 		}
 		
-		return message(fName, lastName);
+		return greetingService.message(fName, lastName);
 	}
 
 }
