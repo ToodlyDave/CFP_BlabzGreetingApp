@@ -1,5 +1,6 @@
 package com.springApps.GreetingApp.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,11 @@ public class GreetingController {
 	@GetMapping("/find/{id}")
 	public Greeting findGreeting(@PathVariable String id) {
 		return greetingService.findGreeting(id);
+	}
+	
+	@GetMapping("/show")
+	public List<Greeting> showGreetings() {
+		return greetingService.showAllGreetings();
 	}
 
 }
